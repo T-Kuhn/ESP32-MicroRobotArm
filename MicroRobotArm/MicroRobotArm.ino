@@ -1,22 +1,12 @@
 /*
- Repeat timer example
-
- This example shows how to use hardware timer in ESP32. The timer calls onTimer
- function every second. The timer can be stopped with button attached to PIN 0
- (IO0).
-
- This example code is in the public domain.
+ESP32 MicroRobotArm
  */
+
+const double FREQ = 0.0005;
+const double BASE_AMPLITUDE = 1000;
 
 #define STEP 2
 #define DIR 4
-
-// TestPins
-#define TP1 16
-#define TP2 17
-#define TP3 18
-#define TP4 19
-
 #define EXECUTING_ISR_CODE 5
 
 hw_timer_t *timer = NULL;
@@ -24,39 +14,38 @@ volatile SemaphoreHandle_t timerSemaphore;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 
 volatile uint32_t isrCounter = 0;
+int posX;
+bool isMovingCW = true;
+
+uint32_t pulseFromAmplitudeX(double ampl, double c)
+{
+  uint32_t s = (uint32_t)(c * ampl);
+  uint32_t res = s % 2;
+
+  if (res > digitalRead(STEP))
+  {
+    // count the positive flank.
+    posX += isMovingCW ? 1 : -1;
+  }
+  return res;
+}
 
 void IRAM_ATTR onTimer()
 {
   digitalWrite(EXECUTING_ISR_CODE, HIGH);
 
-  digitalWrite(TP1, HIGH);
-  digitalWrite(TP2, HIGH);
-  digitalWrite(TP3, HIGH);
-
-  digitalWrite(TP1, LOW);
-  digitalWrite(TP2, LOW);
-  digitalWrite(TP3, LOW);
-
-  // Increment the counter of the ISR
   portENTER_CRITICAL_ISR(&timerMux);
   isrCounter++;
   portEXIT_CRITICAL_ISR(&timerMux);
 
-  if (cos((double)isrCounter * 0.01) > 0.4)
-  {
-    digitalWrite(TP4, LOW);
-  }
-  else
-  {
-    digitalWrite(TP4, HIGH);
-  }
-
-  // Give a semaphore that we can check in the loop
   xSemaphoreGiveFromISR(timerSemaphore, NULL);
 
-  // It is safe to use digitalRead/Write here if you want to toggle an output
-  int currentStepLevel = digitalRead(STEP);
-  digitalWrite(STEP, !currentStepLevel);
+  // Sin Thing
+  double c = cos(isrCounter * FREQ) + 1.0;
+
+  uint32_t xStepBit = pulseFromAmplitudeX(BASE_AMPLITUDE, c);
+  // Sin Thing
+  digitalWrite(STEP, xStepBit);
 
   digitalWrite(EXECUTING_ISR_CODE, LOW);
 }
@@ -69,11 +58,6 @@ void setup()
   pinMode(STEP, OUTPUT);
   pinMode(DIR, OUTPUT);
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
-
-  pinMode(TP1, OUTPUT);
-  pinMode(TP2, OUTPUT);
-  pinMode(TP3, OUTPUT);
-  pinMode(TP4, OUTPUT);
 
   digitalWrite(DIR, HIGH);
 
@@ -90,7 +74,7 @@ void setup()
 
   // Set alarm to call onTimer function every x microseconds.
   // Repeat the alarm (third parameter)
-  timerAlarmWrite(timer, 700, true);
+  timerAlarmWrite(timer, 512, true);
 
   // Start an alarm
   timerAlarmEnable(timer);
@@ -98,8 +82,6 @@ void setup()
 
 void loop()
 {
-  delay(1000);
-
   // If Timer has fired
   if (xSemaphoreTake(timerSemaphore, 0) == pdTRUE)
   {
@@ -113,15 +95,16 @@ void loop()
     // Print it
     //Serial.print("cnt: ");
     //Serial.println(isrCount);
+    delay(1000);
   }
 }
 
 // MEMO:
 //
 // TODO:
-// - implement that sin thing.
 //
 // DOING:
+// - implement that sin thing.
 // - implement a mechanism to see how much time we spend in the ISR.
 //
 // DONE:
