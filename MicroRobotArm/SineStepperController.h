@@ -1,13 +1,14 @@
 /*
   SineStepperController library
   Author: T-Kuhn.
-  Sapporo, Octobre, 2018. Released into the public domain.
+  Sapporo, October, 2018. Released into the public domain.
   */
+
+#define MAX_NUM_OF_STEPPERS 10
 
 #ifndef SineStepperController_h
 #define SineStepperController_h
 
-#define MAX_NUM_OF_STEPPERS 10
 #include "Arduino.h"
 #include "SineStepper.h"
 
