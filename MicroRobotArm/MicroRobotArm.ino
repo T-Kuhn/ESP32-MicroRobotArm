@@ -1,7 +1,7 @@
 /*
   ESP32 MicroRobotArm
   Author: T-Kuhn.
-  Sapporo, Octobre, 2018. Released into the public domain.
+  Sapporo, October, 2018. Released into the public domain.
  */
 
 #include "SineStepper.h"
