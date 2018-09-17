@@ -6,23 +6,22 @@
 
 #ifndef SineStepper_h
 #define SineStepper_h
+#include "Constants.h"
 #include "Arduino.h"
 
-// - - - - - - - - - - - - - - - - - - -
-// - - - - - Encoder CLASS - - - - - - -
-// - - - - - - - - - - - - - - - - - - -
 class SineStepper
 {
 public:
   SineStepper(uint8_t pinStep, uint8_t pinDir, uint8_t stepperID);
   void update(double cosine);
+  void setGoalPos(int32_t goalPos);
   int32_t currentPos;
   int8_t id;
-  int8_t goalPosition;
 
 private:
   uint8_t pulseFromAmplitude(double ampl, double cosine);
-
+  int32_t _goalPosition;
+  int32_t _currentStepsToTake;
   uint8_t _pinStep;
   uint8_t _pinDir;
   bool _isMovingCW;

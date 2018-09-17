@@ -4,28 +4,28 @@
   Sapporo, October, 2018. Released into the public domain.
   */
 
-#define MAX_NUM_OF_STEPPERS 10
-
 #ifndef SineStepperController_h
 #define SineStepperController_h
 
+#include "Constants.h"
 #include "Arduino.h"
 #include "SineStepper.h"
+#include "Queue.h"
+#include "MoveBatch.h"
 
-// - - - - - - - - - - - - - - - - - - -
-// - - - - - Encoder CLASS - - - - - - -
-// - - - - - - - - - - - - - - - - - - -
 class SineStepperController
 {
 public:
   SineStepperController(double freq);
-  void update(uint32_t isrCounter);
+  void update();
   void attach(SineStepper *sStepper);
+  void setMoveBatch(MoveBatch *mb);
+  volatile bool isExecuting;
 
 private:
+  uint32_t _counter = 0;
   SineStepper *_sineSteppers[MAX_NUM_OF_STEPPERS];
   double _frequency;
-  uint8_t _numOfAttachedSteppers;
 };
 
 #endif
