@@ -12,7 +12,7 @@
 
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
 SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
-SineStepperController sineStepperController(/*frequency:*/ 0.0005);
+SineStepperController sineStepperController(/*frequency:*/ 0.0001);
 
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -39,23 +39,21 @@ void setup()
 
   // initialize MoveBatches
   MoveBatch batch0;
+  batch0.addMove(/*id:*/ 0, /*pos:*/ 7);
+  batch0.addMove(/*id:*/ 1, /*pos:*/ 9);
+  sineStepperController.addMoveBatch(batch0);
   MoveBatch batch1;
+  batch1.addMove(/*id:*/ 0, /*pos:*/ -13);
+  batch1.addMove(/*id:*/ 1, /*pos:*/ -27);
+  sineStepperController.addMoveBatch(batch1);
   MoveBatch batch2;
+  batch2.addMove(/*id:*/ 0, /*pos:*/ 20);
+  batch2.addMove(/*id:*/ 1, /*pos:*/ 30);
+  sineStepperController.addMoveBatch(batch2);
   MoveBatch batch3;
-  batch0.addMove(/*id:*/ 0, /*pos:*/ 1000);
-  batch0.addMove(/*id:*/ 1, /*pos:*/ 2000);
-  batch1.addMove(/*id:*/ 0, /*pos:*/ 0);
-  batch1.addMove(/*id:*/ 1, /*pos:*/ 0);
-  batch2.addMove(/*id:*/ 0, /*pos:*/ -1001);
-  batch2.addMove(/*id:*/ 1, /*pos:*/ -2002);
   batch3.addMove(/*id:*/ 0, /*pos:*/ 0);
   batch3.addMove(/*id:*/ 1, /*pos:*/ 0);
-  portENTER_CRITICAL(&timerMux);
-  sineStepperController.addMoveBatch(batch0);
-  sineStepperController.addMoveBatch(batch1);
-  sineStepperController.addMoveBatch(batch2);
   sineStepperController.addMoveBatch(batch3);
-  portEXIT_CRITICAL(&timerMux);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
 
@@ -85,16 +83,12 @@ void loop()
 // MEMO:
 //
 // TODO:
+// - automatic frequency calculation (calculated from highest stepsToTake)
+// - make MoveBatch creation more convenient to use
 //
 // DOING:
 //
 // DONE:
+// - make sure all moves end with the pulse output on LOW
 // - flesh out implementation
-// - implement "SineMoveBatch"
-// - implement direction
-// - implement "SineStepper"
-// - implement "SineStepperController"
-// - get that encoder library in here (just to see how it's done.)
-// - implement a mechanism to see how much time we spend in the ISR.
-// - implement that sin thing.
 //

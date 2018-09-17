@@ -20,7 +20,7 @@ public:
   int8_t id;
 
 private:
-  uint8_t pulseFromAmplitude(double ampl, double cosine);
+  uint8_t pulseFromAmplitude(double stepsToTake, double cosine);
   int32_t _goalPosition;
   int32_t _currentStepsToTake;
   uint8_t _pinStep;
