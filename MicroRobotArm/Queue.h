@@ -32,10 +32,10 @@
  * 
  */
 
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef Queue_h
+#define Queue_h
 
-#include <Arduino.h>
+#include "Arduino.h"
 
 template <class T>
 class Queue

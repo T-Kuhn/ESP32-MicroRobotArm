@@ -4,11 +4,11 @@
   Sapporo, October, 2018. Released into the public domain.
  */
 
+#include "Constants.h"
 #include "SineStepper.h"
 #include "SineStepperController.h"
 #include "Queue.h"
-
-#define EXECUTING_ISR_CODE 5
+#include "MoveBatch.h"
 
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
 SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
@@ -17,15 +17,13 @@ SineStepperController sineStepperController(/*frequency:*/ 0.0005);
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
 volatile SemaphoreHandle_t timerSemaphore;
-volatile uint32_t isrCounter = 0;
 
 void IRAM_ATTR onTimer()
 {
   digitalWrite(EXECUTING_ISR_CODE, HIGH);
 
   portENTER_CRITICAL_ISR(&timerMux);
-  isrCounter++;
-  sineStepperController.update(isrCounter);
+  sineStepperController.update();
   portEXIT_CRITICAL_ISR(&timerMux);
 
   xSemaphoreGiveFromISR(timerSemaphore, NULL);
@@ -38,6 +36,26 @@ void setup()
   timerSemaphore = xSemaphoreCreateBinary();
   sineStepperController.attach(&sineStepper1);
   sineStepperController.attach(&sineStepper2);
+
+  // initialize MoveBatches
+  MoveBatch batch0;
+  MoveBatch batch1;
+  MoveBatch batch2;
+  MoveBatch batch3;
+  batch0.addMove(/*id:*/ 0, /*pos:*/ 1000);
+  batch0.addMove(/*id:*/ 1, /*pos:*/ 2000);
+  batch1.addMove(/*id:*/ 0, /*pos:*/ 0);
+  batch1.addMove(/*id:*/ 1, /*pos:*/ 0);
+  batch2.addMove(/*id:*/ 0, /*pos:*/ -1001);
+  batch2.addMove(/*id:*/ 1, /*pos:*/ -2002);
+  batch3.addMove(/*id:*/ 0, /*pos:*/ 0);
+  batch3.addMove(/*id:*/ 1, /*pos:*/ 0);
+  portENTER_CRITICAL(&timerMux);
+  sineStepperController.addMoveBatch(batch0);
+  sineStepperController.addMoveBatch(batch1);
+  sineStepperController.addMoveBatch(batch2);
+  sineStepperController.addMoveBatch(batch3);
+  portEXIT_CRITICAL(&timerMux);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
 
@@ -60,24 +78,20 @@ void loop()
 
     Serial.print("pos: ");
     Serial.println(pos);
-    delay(10);
+    delay(100);
   }
 }
 
 // MEMO:
-// what's up next?
-// we got the current position.
-// we got the ID.
-// now we need queueing movebatches.
-//
 //
 // TODO:
 //
 // DOING:
-// - implement "SineMoveBatch"
-// - flesh out implementation
 //
 // DONE:
+// - flesh out implementation
+// - implement "SineMoveBatch"
+// - implement direction
 // - implement "SineStepper"
 // - implement "SineStepperController"
 // - get that encoder library in here (just to see how it's done.)
