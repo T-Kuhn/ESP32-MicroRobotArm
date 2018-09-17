@@ -12,7 +12,7 @@
 
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
 SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
-SineStepperController sineStepperController(/*frequency:*/ 0.0001);
+SineStepperController sineStepperController(/*frequency:*/ 0.0005);
 
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -38,22 +38,17 @@ void setup()
   sineStepperController.attach(&sineStepper2);
 
   // initialize MoveBatches
-  MoveBatch batch0;
-  batch0.addMove(/*id:*/ 0, /*pos:*/ 7);
-  batch0.addMove(/*id:*/ 1, /*pos:*/ 9);
-  sineStepperController.addMoveBatch(batch0);
-  MoveBatch batch1;
-  batch1.addMove(/*id:*/ 0, /*pos:*/ -13);
-  batch1.addMove(/*id:*/ 1, /*pos:*/ -27);
-  sineStepperController.addMoveBatch(batch1);
-  MoveBatch batch2;
-  batch2.addMove(/*id:*/ 0, /*pos:*/ 20);
-  batch2.addMove(/*id:*/ 1, /*pos:*/ 30);
-  sineStepperController.addMoveBatch(batch2);
-  MoveBatch batch3;
-  batch3.addMove(/*id:*/ 0, /*pos:*/ 0);
-  batch3.addMove(/*id:*/ 1, /*pos:*/ 0);
-  sineStepperController.addMoveBatch(batch3);
+  MoveBatch mb;
+  mb.addMove(/*id:*/ 0, /*pos:*/ 7);
+  mb.addMove(/*id:*/ 1, /*pos:*/ 9);
+  sineStepperController.addMoveBatch(mb);
+  mb.addMove(/*id:*/ 0, /*pos:*/ -13);
+  sineStepperController.addMoveBatch(mb);
+  mb.addMove(/*id:*/ 0, /*pos:*/ 20);
+  sineStepperController.addMoveBatch(mb);
+  mb.addMove(/*id:*/ 0, /*pos:*/ 0);
+  mb.addMove(/*id:*/ 1, /*pos:*/ 0);
+  sineStepperController.addMoveBatch(mb);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
 
@@ -71,7 +66,7 @@ void loop()
     int32_t pos = 0;
 
     portENTER_CRITICAL(&timerMux);
-    pos = sineStepper1.currentPos;
+    pos = sineStepper2.currentPos;
     portEXIT_CRITICAL(&timerMux);
 
     Serial.print("pos: ");
@@ -84,11 +79,11 @@ void loop()
 //
 // TODO:
 // - automatic frequency calculation (calculated from highest stepsToTake)
-// - make MoveBatch creation more convenient to use
 //
 // DOING:
 //
 // DONE:
+// - make MoveBatch creation more convenient to use
 // - make sure all moves end with the pulse output on LOW
 // - flesh out implementation
 //
