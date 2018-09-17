@@ -6,6 +6,7 @@
 
 #include "SineStepper.h"
 #include "SineStepperController.h"
+#include "Queue.h"
 
 #define EXECUTING_ISR_CODE 5
 
@@ -64,15 +65,21 @@ void loop()
 }
 
 // MEMO:
+// what's up next?
+// we got the current position.
+// we got the ID.
+// now we need queueing movebatches.
+//
 //
 // TODO:
 //
 // DOING:
-// - implement "SineStepper"
-// - implement "SineStepperController"
 // - implement "SineMoveBatch"
+// - flesh out implementation
 //
 // DONE:
+// - implement "SineStepper"
+// - implement "SineStepperController"
 // - get that encoder library in here (just to see how it's done.)
 // - implement a mechanism to see how much time we spend in the ISR.
 // - implement that sin thing.
