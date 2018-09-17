@@ -42,14 +42,14 @@ void setup()
   MoveBatch batch1;
   MoveBatch batch2;
   MoveBatch batch3;
-  batch0.addMove(/*id:*/ 0, /*pos:*/ 10);
-  batch0.addMove(/*id:*/ 1, /*pos:*/ 20);
-  batch1.addMove(/*id:*/ 0, /*pos:*/ 100);
-  batch1.addMove(/*id:*/ 1, /*pos:*/ 200);
-  batch2.addMove(/*id:*/ 0, /*pos:*/ 200);
-  batch2.addMove(/*id:*/ 1, /*pos:*/ 400);
-  batch3.addMove(/*id:*/ 0, /*pos:*/ 300);
-  batch3.addMove(/*id:*/ 1, /*pos:*/ 500);
+  batch0.addMove(/*id:*/ 0, /*pos:*/ 1000);
+  batch0.addMove(/*id:*/ 1, /*pos:*/ 2000);
+  batch1.addMove(/*id:*/ 0, /*pos:*/ 0);
+  batch1.addMove(/*id:*/ 1, /*pos:*/ 0);
+  batch2.addMove(/*id:*/ 0, /*pos:*/ -1001);
+  batch2.addMove(/*id:*/ 1, /*pos:*/ -2002);
+  batch3.addMove(/*id:*/ 0, /*pos:*/ 0);
+  batch3.addMove(/*id:*/ 1, /*pos:*/ 0);
   portENTER_CRITICAL(&timerMux);
   sineStepperController.addMoveBatch(batch0);
   sineStepperController.addMoveBatch(batch1);
@@ -85,13 +85,13 @@ void loop()
 // MEMO:
 //
 // TODO:
-// - implement direction
 //
 // DOING:
-// - flesh out implementation
 //
 // DONE:
+// - flesh out implementation
 // - implement "SineMoveBatch"
+// - implement direction
 // - implement "SineStepper"
 // - implement "SineStepperController"
 // - get that encoder library in here (just to see how it's done.)

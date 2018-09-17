@@ -25,6 +25,7 @@ public:
 
 private:
   bool _isExecutingBatch;
+  uint8_t _numOfAttachedSteppers;
   uint32_t _counter = 0;
   Queue<MoveBatch> _batchQueue = Queue<MoveBatch>(MAX_NUM_OF_BATCHED_MOVES);
   SineStepper *_sineSteppers[MAX_NUM_OF_STEPPERS];

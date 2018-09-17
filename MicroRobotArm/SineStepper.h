@@ -15,6 +15,7 @@ public:
   SineStepper(uint8_t pinStep, uint8_t pinDir, uint8_t stepperID);
   void update(double cosine);
   void setGoalPos(int32_t goalPos);
+  void setStepsToTakeToZero();
   int32_t currentPos;
   int8_t id;
 

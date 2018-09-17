@@ -42,6 +42,25 @@ void SineStepper::setGoalPos(int32_t goalPos)
 {
     _goalPosition = goalPos;
     _currentStepsToTake = goalPos - currentPos;
+
+    if (_currentStepsToTake > 0)
+    {
+        digitalWrite(_pinDir, HIGH);
+        _isMovingCW = true;
+    }
+    else
+    {
+        digitalWrite(_pinDir, LOW);
+        _isMovingCW = false;
+    }
+}
+
+// - - - - - - - - - - - - - - -
+// - SET STEPS TO TAKE TO ZERO -
+// - - - - - - - - - - - - - - -
+void SineStepper::setStepsToTakeToZero()
+{
+    _currentStepsToTake = 0;
 }
 
 // - - - - - - - - - - - - - - -
