@@ -19,11 +19,14 @@ public:
   SineStepperController(double freq);
   void update();
   void attach(SineStepper *sStepper);
-  void setMoveBatch(MoveBatch *mb);
-  volatile bool isExecuting;
+  void addMoveBatch(MoveBatch mb);
+  MoveBatch popMoveBatch();
+  MoveBatch peekMoveBatch();
 
 private:
+  bool _isExecutingBatch;
   uint32_t _counter = 0;
+  Queue<MoveBatch> _batchQueue = Queue<MoveBatch>(MAX_NUM_OF_BATCHED_MOVES);
   SineStepper *_sineSteppers[MAX_NUM_OF_STEPPERS];
   double _frequency;
 };

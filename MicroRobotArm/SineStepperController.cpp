@@ -17,7 +17,7 @@ SineStepperController::SineStepperController(double freq)
 {
     _frequency = freq;
     _counter = 0;
-    isExecuting = false;
+    _isExecutingBatch = false;
 
     for (uint8_t i = 0; i < MAX_NUM_OF_STEPPERS; i++)
     {
@@ -37,18 +37,29 @@ void SineStepperController::attach(SineStepper *sStepper)
 }
 
 // - - - - - - - - - - - - - - -
-// - - - - SET MOVE BATCH  - - -
+// - - -  ADD MOVE BATCH - - - -
 // - - - - - - - - - - - - - - -
-void SineStepperController::setMoveBatch(MoveBatch *mb)
+void SineStepperController::addMoveBatch(MoveBatch mb)
 {
-    for (uint8_t i = 0; i < MAX_NUM_OF_STEPPERS; i++)
-    {
-        if (mb->batch[i].isActive)
-        {
-            _sineSteppers[i]->setGoalPos(mb->batch[i].positon);
-        }
-    }
-    isExecuting = true;
+    _batchQueue.push(mb);
+}
+
+// - - - - - - - - - - - - - - -
+// - - -  POP MOVE BATCH - - - -
+// - - - - - - - - - - - - - - -
+// NOTE: for debugging purposes.
+MoveBatch SineStepperController::popMoveBatch()
+{
+    return _batchQueue.pop();
+}
+
+// - - - - - - - - - - - - - - -
+// - - -  PEEK MOVE BATCH  - - -
+// - - - - - - - - - - - - - - -
+// NOTE: for debugging purposes.
+MoveBatch SineStepperController::peekMoveBatch()
+{
+    return _batchQueue.peek();
 }
 
 // - - - - - - - - - - - - - - -
@@ -56,7 +67,23 @@ void SineStepperController::setMoveBatch(MoveBatch *mb)
 // - - - - - - - - - - - - - - -
 void SineStepperController::update()
 {
-    if (isExecuting)
+    if (!_isExecutingBatch)
+    {
+        // LOAD NEW BATCH
+        if (_batchQueue.peek().isActive)
+        {
+            MoveBatch mb = _batchQueue.pop();
+            for (uint8_t i = 0; i < MAX_NUM_OF_STEPPERS; i++)
+            {
+                if (mb.batch[i].isActive)
+                {
+                    _sineSteppers[i]->setGoalPos(mb.batch[i].positon);
+                }
+            }
+            _isExecutingBatch = true;
+        }
+    }
+    else
     {
         // GENERATE PULSES
         _counter++;
@@ -74,7 +101,7 @@ void SineStepperController::update()
 
         if (theta > M_PI)
         {
-            isExecuting = false;
+            _isExecutingBatch = false;
             _counter = 0;
         }
     }

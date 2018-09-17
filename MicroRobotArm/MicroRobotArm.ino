@@ -13,7 +13,6 @@
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
 SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
 SineStepperController sineStepperController(/*frequency:*/ 0.0005);
-Queue<MoveBatch> batchQueue = Queue<MoveBatch>(MAX_NUM_OF_BATCHED_MOVES);
 
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -47,14 +46,16 @@ void setup()
   batch0.addMove(/*id:*/ 1, /*pos:*/ 20);
   batch1.addMove(/*id:*/ 0, /*pos:*/ 100);
   batch1.addMove(/*id:*/ 1, /*pos:*/ 200);
-  batch2.addMove(/*id:*/ 0, /*pos:*/ 1);
-  batch2.addMove(/*id:*/ 1, /*pos:*/ 2);
-  batch3.addMove(/*id:*/ 0, /*pos:*/ 50);
-  batch3.addMove(/*id:*/ 1, /*pos:*/ 100);
-  batchQueue.push(batch0);
-  batchQueue.push(batch1);
-  batchQueue.push(batch2);
-  batchQueue.push(batch3);
+  batch2.addMove(/*id:*/ 0, /*pos:*/ 200);
+  batch2.addMove(/*id:*/ 1, /*pos:*/ 400);
+  batch3.addMove(/*id:*/ 0, /*pos:*/ 300);
+  batch3.addMove(/*id:*/ 1, /*pos:*/ 500);
+  portENTER_CRITICAL(&timerMux);
+  sineStepperController.addMoveBatch(batch0);
+  sineStepperController.addMoveBatch(batch1);
+  sineStepperController.addMoveBatch(batch2);
+  sineStepperController.addMoveBatch(batch3);
+  portEXIT_CRITICAL(&timerMux);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
 
@@ -73,19 +74,6 @@ void loop()
 
     portENTER_CRITICAL(&timerMux);
     pos = sineStepper1.currentPos;
-
-    if (!sineStepperController.isExecuting)
-    {
-      Serial.println("not executing.");
-      if (batchQueue.peek().isActive)
-      {
-        Serial.println("setting up.");
-        MoveBatch mb = batchQueue.pop();
-        sineStepperController.setMoveBatch(&mb);
-      }
-    }
-    //Serial.println(batchQueue.pop().isActive);
-
     portEXIT_CRITICAL(&timerMux);
 
     Serial.print("pos: ");
