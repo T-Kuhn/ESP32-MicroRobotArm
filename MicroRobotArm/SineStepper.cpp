@@ -21,6 +21,7 @@ SineStepper::SineStepper(uint8_t pinStep, uint8_t pinDir, uint8_t stepperID)
     _isMovingCW = true;
     _goalPosition = 0;
     _currentStepsToTake = 0;
+    _lastPulse = 0;
 
     pinMode(_pinStep, OUTPUT);
     pinMode(_pinDir, OUTPUT);
@@ -33,6 +34,7 @@ void SineStepper::update(double cosine)
 {
     uint8_t pulse = pulseFromAmplitude(_currentStepsToTake, cosine);
     digitalWrite(_pinStep, pulse);
+    _lastPulse = pulse;
 }
 
 // - - - - - - - - - - - - - - -
@@ -71,7 +73,7 @@ uint8_t SineStepper::pulseFromAmplitude(double stepsToTake, double cosine)
     uint32_t doubledStepCount = (uint32_t)(round(cosine * stepsToTake));
     uint8_t stepLevel = doubledStepCount % 2;
 
-    if (stepLevel > digitalRead(_pinStep))
+    if (stepLevel > _lastPulse)
     {
         currentPos += _isMovingCW ? 1 : -1;
     }
