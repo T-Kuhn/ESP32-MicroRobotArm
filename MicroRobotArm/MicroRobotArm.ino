@@ -12,7 +12,7 @@
 
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
 SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
-SineStepperController sineStepperController(/*frequency:*/ 0.0005);
+SineStepperController sineStepperController(/*frequency:*/ 0.001, /*endlessRepeat:*/ true);
 
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -39,12 +39,12 @@ void setup()
 
   // initialize MoveBatches
   MoveBatch mb;
-  mb.addMove(/*id:*/ 0, /*pos:*/ 7);
+  mb.addMove(/*id:*/ 0, /*pos:*/ 70);
   mb.addMove(/*id:*/ 1, /*pos:*/ 9);
   sineStepperController.addMoveBatch(mb);
-  mb.addMove(/*id:*/ 0, /*pos:*/ -13);
+  mb.addMove(/*id:*/ 0, /*pos:*/ -130);
   sineStepperController.addMoveBatch(mb);
-  mb.addMove(/*id:*/ 0, /*pos:*/ 20);
+  mb.addMove(/*id:*/ 0, /*pos:*/ 256);
   sineStepperController.addMoveBatch(mb);
   mb.addMove(/*id:*/ 0, /*pos:*/ 0);
   mb.addMove(/*id:*/ 1, /*pos:*/ 0);
@@ -66,18 +66,19 @@ void loop()
     int32_t pos = 0;
 
     portENTER_CRITICAL(&timerMux);
-    pos = sineStepper2.currentPos;
+    pos = sineStepper1.currentPos;
     portEXIT_CRITICAL(&timerMux);
 
     Serial.print("pos: ");
     Serial.println(pos);
-    delay(100);
+    delay(10);
   }
 }
 
 // MEMO:
 //
 // TODO:
+// - add repeat function.
 // - automatic frequency calculation (calculated from highest stepsToTake)
 //
 // DOING:

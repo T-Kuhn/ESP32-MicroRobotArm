@@ -16,7 +16,7 @@
 class SineStepperController
 {
 public:
-  SineStepperController(double freq);
+  SineStepperController(double freq, bool repeat);
   void update();
   void attach(SineStepper *sStepper);
   void addMoveBatch(MoveBatch mb);
@@ -25,6 +25,7 @@ public:
 
 private:
   bool _isExecutingBatch;
+  bool _endlessRepeat;
   uint8_t _numOfAttachedSteppers;
   uint32_t _counter = 0;
   Queue<MoveBatch> _batchQueue = Queue<MoveBatch>(MAX_NUM_OF_BATCHED_MOVES);

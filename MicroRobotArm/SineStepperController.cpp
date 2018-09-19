@@ -13,9 +13,10 @@
 // - - - - - - - - - - - - - - -
 // - - - - CONSTRUCTOR - - - - -
 // - - - - - - - - - - - - - - -
-SineStepperController::SineStepperController(double freq)
+SineStepperController::SineStepperController(double freq, bool repeat)
 {
     _frequency = freq;
+    _endlessRepeat = repeat;
     _counter = 0;
     _numOfAttachedSteppers = 0;
     _isExecutingBatch = false;
@@ -44,6 +45,7 @@ void SineStepperController::attach(SineStepper *sStepper)
 void SineStepperController::addMoveBatch(MoveBatch mb)
 {
     _batchQueue.push(mb);
+    _batchQueue.setResetPoint();
 }
 
 // - - - - - - - - - - - - - - -
@@ -87,6 +89,10 @@ void SineStepperController::update()
                 }
             }
             _isExecutingBatch = true;
+        }
+        else if (_endlessRepeat)
+        {
+            _batchQueue.reset();
         }
     }
     else

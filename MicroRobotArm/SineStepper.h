@@ -25,6 +25,7 @@ private:
   int32_t _currentStepsToTake;
   uint8_t _pinStep;
   uint8_t _pinDir;
+  uint8_t _lastPulse;
   bool _isMovingCW;
 };
 
