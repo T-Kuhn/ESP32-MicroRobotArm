@@ -14,6 +14,7 @@
 MoveBatch::MoveBatch()
 {
     isActive = false;
+    moveDuration = 1.0;
 
     for (uint8_t i = 0; i < MAX_NUM_OF_STEPPERS; i++)
     {

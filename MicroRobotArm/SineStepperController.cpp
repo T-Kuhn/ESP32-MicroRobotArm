@@ -13,9 +13,8 @@
 // - - - - - - - - - - - - - - -
 // - - - - CONSTRUCTOR - - - - -
 // - - - - - - - - - - - - - - -
-SineStepperController::SineStepperController(double freq, bool repeat)
+SineStepperController::SineStepperController(bool repeat)
 {
-    _frequency = freq;
     _endlessRepeat = repeat;
     _counter = 0;
     _numOfAttachedSteppers = 0;
@@ -67,6 +66,14 @@ MoveBatch SineStepperController::peekMoveBatch()
 }
 
 // - - - - - - - - - - - - - - -
+// - - -  SET FREQ FROM  - - - -
+// - - - - - - - - - - - - - - -
+void SineStepperController::setFrequencyFrom(double moveDuration)
+{
+    _frequency = 0.0001 * M_PI / moveDuration;
+}
+
+// - - - - - - - - - - - - - - -
 // - - - - - UPDATE  - - - - - -
 // - - - - - - - - - - - - - - -
 void SineStepperController::update()
@@ -77,6 +84,7 @@ void SineStepperController::update()
         if (_batchQueue.peek().isActive)
         {
             MoveBatch mb = _batchQueue.pop();
+            setFrequencyFrom(mb.moveDuration);
             for (uint8_t i = 0; i < _numOfAttachedSteppers; i++)
             {
                 if (mb.batch[i].isActive)
