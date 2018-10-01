@@ -46,7 +46,7 @@ void setup()
   // initialize MoveBatches
   MoveBatch mb;
   // DEBUG
-  mb = robotArmIK.RunIK(114.0, 4.0, 0.0, mb);
+  mb = robotArmIK.RunIK(104.0, 4.0, 0.2, mb);
 
   // DEBUG
   mb.addMove(/*id:*/ 0, /*pos:*/ 150);

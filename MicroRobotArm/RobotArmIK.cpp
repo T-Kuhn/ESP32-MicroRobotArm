@@ -46,7 +46,7 @@ MoveBatch RobotArmIK::RunIK(double x, double y, double ohm, MoveBatch mb)
     // 3. Calculate point B
     _g = cos(_ohm) * _link4;
     _f = sin(_ohm) * _link4;
-    _P_B = {_P_endeffector.x + _f,
+    _P_B = {_P_endeffector.x - _f,
             _P_endeffector.y + _g};
 
     // 4. Calculate angle phi
@@ -60,18 +60,27 @@ MoveBatch RobotArmIK::RunIK(double x, double y, double ohm, MoveBatch mb)
     // 6. Calculate angles gamma, alpha and beta
     _gamma = acos((_link2 * _link2 + _link3 * _link3 - _c * _c) / (2 * _link2 * _link3));
     _alpha = acos((_link2 * _link2 + _c * _c - _link3 * _link3) / (2 * _link2 * _c));
-    _beta = M_PI_2 - _gamma - _alpha;
+    _beta = M_PI - _gamma - _alpha;
 
     // 7. Calculate angles lambda1, lambda2 and lambda3
-    _lambda1 = M_PI_4 - (_phi + _alpha);
-    _lambda2 = M_PI_2 - _gamma;
-    _lambda3 = ((M_PI_4 - _phi) + _beta) - M_PI_2 + _ohm; // TODO: This looks fishy. Make sure this is correct.
+    _lambda1 = M_PI_2 - (_phi + _alpha);
+    _lambda2 = M_PI - _gamma;
+    _lambda3 = M_PI - ((M_PI_2 - _phi) + _beta) - _ohm; // TODO: This looks fishy. Make sure this is correct.
 
     mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(1000.0 * _lambda1));
     mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(1000.0 * _lambda2));
     mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(1000.0 * _lambda3));
     Serial.print("lambda1: ");
     Serial.println(_lambda1);
+    Serial.print("lambda2: ");
+    Serial.println(_lambda2);
+    Serial.print("lambda3: ");
+    Serial.println(_lambda3);
+
+    Serial.print("Point B.x: ");
+    Serial.println(_P_B.x);
+    Serial.print("Point B.y: ");
+    Serial.println(_P_B.y);
 
     return mb;
 }
