@@ -89,7 +89,7 @@ void SineStepperController::update()
             {
                 if (mb.batch[i].isActive)
                 {
-                    _sineSteppers[i]->setGoalPos(mb.batch[i].positon);
+                    _sineSteppers[i]->setGoalPos(mb.batch[i].position);
                 }
                 else
                 {
