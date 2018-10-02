@@ -45,29 +45,45 @@ void setup()
 
   // initialize MoveBatches
   MoveBatch mb;
-  // DEBUG
-  mb = robotArmIK.RunIK(104.0, 4.0, 0.2, mb);
+  //mb.addMove(/*id:*/ 0, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 1, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 2, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+  //mb.moveDuration = 1;
+  //sineStepperController.addMoveBatch(mb);
 
-  // DEBUG
-  mb.addMove(/*id:*/ 0, /*pos:*/ 150);
-  mb.addMove(/*id:*/ 1, /*pos:*/ 150);
-  mb.addMove(/*id:*/ 2, /*pos:*/ 500);
-  mb.addMove(/*id:*/ 3, /*pos:*/ 500);
+  mb = robotArmIK.RunIK(114.0, 20.0, 0.0, mb);
   mb.moveDuration = 2;
   sineStepperController.addMoveBatch(mb);
 
-  mb.addMove(/*id:*/ 0, /*pos:*/ -50);
-  mb.addMove(/*id:*/ 1, /*pos:*/ -50);
-  mb.addMove(/*id:*/ 2, /*pos:*/ -200);
-  mb.addMove(/*id:*/ 3, /*pos:*/ -200);
-  mb.moveDuration = 2.5;
+  mb = robotArmIK.RunIK(84.0, 20.0, 0.0, mb);
   sineStepperController.addMoveBatch(mb);
 
-  mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-  mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-  mb.addMove(/*id:*/ 2, /*pos:*/ 0);
-  mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-  mb.moveDuration = 1;
+  mb = robotArmIK.RunIK(114.0, 20.0, 0.0, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 20.0, 0.5, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 20.0, -0.5, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 20.0, 0.0, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 50.0, 0.0, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 50.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 80.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 50.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 50.0, 0.0, mb);
   sineStepperController.addMoveBatch(mb);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);

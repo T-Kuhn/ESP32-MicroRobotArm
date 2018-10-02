@@ -67,20 +67,17 @@ MoveBatch RobotArmIK::RunIK(double x, double y, double ohm, MoveBatch mb)
     _lambda2 = M_PI - _gamma;
     _lambda3 = M_PI - ((M_PI_2 - _phi) + _beta) - _ohm; // TODO: This looks fishy. Make sure this is correct.
 
-    mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(1000.0 * _lambda1));
-    mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(1000.0 * _lambda2));
-    mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(1000.0 * _lambda3));
+    mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(2048 * _lambda1 / M_PI));
+    mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(2048 * _lambda2 / M_PI));
+    mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(2048 * _lambda3 / M_PI));
+    /*
     Serial.print("lambda1: ");
     Serial.println(_lambda1);
     Serial.print("lambda2: ");
     Serial.println(_lambda2);
     Serial.print("lambda3: ");
     Serial.println(_lambda3);
-
-    Serial.print("Point B.x: ");
-    Serial.println(_P_B.x);
-    Serial.print("Point B.y: ");
-    Serial.println(_P_B.y);
+    */
 
     return mb;
 }

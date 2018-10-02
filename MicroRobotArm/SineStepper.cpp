@@ -47,12 +47,12 @@ void SineStepper::setGoalPos(int32_t goalPos)
 
     if (_currentStepsToTake > 0)
     {
-        digitalWrite(_pinDir, HIGH);
+        digitalWrite(_pinDir, LOW);
         _isMovingCW = true;
     }
     else
     {
-        digitalWrite(_pinDir, LOW);
+        digitalWrite(_pinDir, HIGH);
         _isMovingCW = false;
     }
 }
