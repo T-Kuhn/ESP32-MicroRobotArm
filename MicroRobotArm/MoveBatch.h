@@ -12,7 +12,7 @@
 struct MoveCommand
 {
   bool isActive;
-  int32_t positon;
+  int32_t position;
 };
 
 class MoveBatch

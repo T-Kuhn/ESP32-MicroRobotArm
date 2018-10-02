@@ -9,10 +9,14 @@
 #include "SineStepperController.h"
 #include "Queue.h"
 #include "MoveBatch.h"
+#include "RobotArmIK.h"
 
 SineStepper sineStepper1(/*pinStep:*/ 2, /*pinDir:*/ 4, /*id:*/ 0);
-SineStepper sineStepper2(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 1);
+SineStepper sineStepper2(/*pinStep:*/ 16, /*pinDir:*/ 17, /*id:*/ 1);
+SineStepper sineStepper3(/*pinStep:*/ 5, /*pinDir:*/ 18, /*id:*/ 2);
+SineStepper sineStepper4(/*pinStep:*/ 19, /*pinDir:*/ 21, /*id:*/ 3);
 SineStepperController sineStepperController(/*endlessRepeat:*/ true);
+RobotArmIK robotArmIK(43.0, 60.0, 70.0, 54.0);
 
 hw_timer_t *timer = NULL;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
@@ -36,25 +40,50 @@ void setup()
   timerSemaphore = xSemaphoreCreateBinary();
   sineStepperController.attach(&sineStepper1);
   sineStepperController.attach(&sineStepper2);
+  sineStepperController.attach(&sineStepper3);
+  sineStepperController.attach(&sineStepper4);
 
   // initialize MoveBatches
   MoveBatch mb;
-  mb.addMove(/*id:*/ 0, /*pos:*/ 70);
-  mb.addMove(/*id:*/ 1, /*pos:*/ 9);
-  mb.moveDuration = 1.0;
+  //mb.addMove(/*id:*/ 0, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 1, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 2, /*pos:*/ 0);
+  //mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+  //mb.moveDuration = 1;
+  //sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(114.0, 20.0, 0.0, mb);
+  mb.moveDuration = 2;
   sineStepperController.addMoveBatch(mb);
 
-  mb.addMove(/*id:*/ 0, /*pos:*/ -130);
-  mb.moveDuration = 1.0;
+  mb = robotArmIK.RunIK(84.0, 20.0, 0.0, mb);
   sineStepperController.addMoveBatch(mb);
 
-  mb.addMove(/*id:*/ 0, /*pos:*/ 256);
-  mb.moveDuration = 1.0;
+  mb = robotArmIK.RunIK(114.0, 20.0, 0.0, mb);
   sineStepperController.addMoveBatch(mb);
 
-  mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-  mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-  mb.moveDuration = 1.0;
+  mb = robotArmIK.RunIK(94.0, 20.0, 0.5, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 20.0, -0.5, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 20.0, 0.0, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 50.0, 0.0, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 50.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 80.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(134.0, 50.0, M_PI_2, mb);
+  sineStepperController.addMoveBatch(mb);
+
+  mb = robotArmIK.RunIK(94.0, 50.0, 0.0, mb);
   sineStepperController.addMoveBatch(mb);
 
   pinMode(EXECUTING_ISR_CODE, OUTPUT);
@@ -77,8 +106,8 @@ void loop()
     pos = sineStepper1.currentPos;
     portEXIT_CRITICAL(&timerMux);
 
-    Serial.print("pos: ");
-    Serial.println(pos);
+    //Serial.print("pos: ");
+    //Serial.println(pos);
     delay(10);
   }
 }
@@ -86,6 +115,7 @@ void loop()
 // MEMO:
 //
 // TODO:
+// - calculate max possible stepsToTake without loosing steps.
 //
 // DOING:
 //
