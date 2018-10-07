@@ -139,6 +139,37 @@ void lookingUpAndDown(MoveBatch mb)
     sineStepperController.addMoveBatch(mb);
 }
 
+void drillingLeft(MoveBatch mb)
+{
+    mb = robotArmIK.runIK(124.0, 74.0, M_PI_2, mb);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(144.0, 74.0, M_PI_2, mb);
+    mb.moveDuration = 2.5;
+    mb.addMove(/*id:*/ 3, /*pos:*/ 2048);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(124.0, 74.0, M_PI_2, mb);
+    mb.moveDuration = 2.5;
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
+    mb.moveDuration = 1.7;
+}
+
+void slidingAlongFloor(MoveBatch mb)
+{
+    mb = robotArmIK.runIK(94.0, 10.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(74.0, 10.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(94.0, 10.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -156,40 +187,12 @@ void setup()
     MoveBatch mb;
     mb.moveDuration = 1.7;
 
-    //drillingUpElbowUpAndDown(mb);
-    //lookingUpAndDown(mb);
+    drillingUpElbowUpAndDown(mb);
+    lookingUpAndDown(mb);
+    drillingLeft(mb);
+    slidingAlongFloor(mb);
 
-    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2, mb);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb, false);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2, mb, false);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb, false);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-
-    mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 2, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-    sineStepperController.addMoveBatch(mb);
-
+    mb.moveDuration = 1.7;
     mb.addMove(/*id:*/ 0, /*pos:*/ 0);
     mb.addMove(/*id:*/ 1, /*pos:*/ 0);
     mb.addMove(/*id:*/ 2, /*pos:*/ 0);
