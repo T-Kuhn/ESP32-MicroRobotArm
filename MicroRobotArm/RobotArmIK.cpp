@@ -26,7 +26,7 @@ RobotArmIK::RobotArmIK(double link1, double link2, double link3, double link4)
 // - - - - - - - - - - - - - - -
 // - - - - - RUN IK  - - - - - -
 // - - - - - - - - - - - - - - -
-MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
+MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb, bool elbowUp)
 {
     Point2D _P_A, _P_B, _P_C;
     double _g, _f;
@@ -36,7 +36,7 @@ MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
     // Note how there's no z-coordinate.
 
     // 1. Set up P_endeffector and the angle "ohm"
-    Point2D _P_endeffector = {x, y};
+    Point2D _P_endeffector = {elbowUp ? x : -x, y};
     double _ohm = ohm;
 
     // 2. Calculate point A
@@ -64,14 +64,22 @@ MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
     _alpha = acos((_link2 * _link2 + _c * _c - _link3 * _link3) / (2 * _link2 * _c));
     _beta = M_PI - _gamma - _alpha;
 
-    // 7. Calculate angles lambda1, lambda2 and lambda3
+    // 7. Calculate angles lambda1, lambda2 and lambda3 in the case of "elbow up."
     _lambda1 = M_PI_2 - (_phi + _alpha);
     _lambda2 = M_PI - _gamma;
     _lambda3 = M_PI - ((M_PI_2 - _phi) + _beta) - _ohm;
 
-    mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(2048 * _lambda1 / M_PI));
-    mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(2048 * _lambda2 / M_PI));
-    mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(2048 * _lambda3 / M_PI));
+    // 8. Calculate angles lambda1, lambda2 and lambda3 in the case of "elbow down."
+    if (!elbowUp)
+    {
+        _lambda1 = -_lambda1;
+        _lambda2 = -_lambda2;
+        _lambda3 = -_lambda3;
+    }
+
+    mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(PULSES_PER_REVOLUTION * _lambda1 / M_PI));
+    mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(PULSES_PER_REVOLUTION * _lambda2 / M_PI));
+    mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(PULSES_PER_REVOLUTION * _lambda3 / M_PI));
 
     /*
     Serial.print("lambda1: ");
@@ -81,6 +89,7 @@ MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
     Serial.print("lambda3: ");
     Serial.println(_lambda3);
     */
+
     if (_lambda1 != _lambda1 || _lambda2 != _lambda2 || _lambda3 != _lambda3)
     {
         digitalWrite(NAN_ALERT_LED, HIGH);

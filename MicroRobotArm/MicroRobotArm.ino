@@ -124,10 +124,28 @@ void setup()
     //mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
     //sineStepperController.addMoveBatch(mb);
 
-    mb = robotArmIK.runIK(5.0, 220.0, M_PI, mb);
+    mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
 
-    mb = robotArmIK.runIK(-5.0, 220.0, M_PI, mb);
+    mb = robotArmIK.runIK(50.0, 170.0, M_PI, mb);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(50.0, 170.0, M_PI, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
 
     mb.addMove(/*id:*/ 0, /*pos:*/ 0);
@@ -200,19 +218,3 @@ void loop()
         delay(10);
     }
 }
-
-// MEMO:
-//
-// TODO:
-// - calculate max possible stepsToTake without loosing steps.
-//
-// DOING:
-//
-// DONE:
-// - automatic frequency calculation (calculated from highest stepsToTake)
-//   -> settable moveBatchDuration felt more useful.
-// - add repeat function.
-// - make MoveBatch creation more convenient to use
-// - make sure all moves end with the pulse output on LOW
-// - flesh out implementation
-//

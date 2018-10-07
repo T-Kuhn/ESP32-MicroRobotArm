@@ -25,6 +25,8 @@
 #define ROTARY_ENC_1_A 32
 #define ROTARY_ENC_1_B 33
 
+#define PULSES_PER_REVOLUTION 2048
+
 // NOTE: SineStepper and MoveBatch ids must be lower then MAX_NUM_OF_STEPPERS
 #define MAX_NUM_OF_STEPPERS 10
 #define MAX_NUM_OF_BATCHED_MOVES 100
