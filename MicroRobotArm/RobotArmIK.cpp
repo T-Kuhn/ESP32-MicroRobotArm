@@ -19,6 +19,8 @@ RobotArmIK::RobotArmIK(double link1, double link2, double link3, double link4)
     _link2 = link2;
     _link3 = link3;
     _link4 = link4;
+
+    pinMode(NAN_ALERT_LED, OUTPUT);
 }
 
 // - - - - - - - - - - - - - - -
@@ -81,6 +83,7 @@ MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
     */
     if (_lambda1 != _lambda1 || _lambda2 != _lambda2 || _lambda3 != _lambda3)
     {
+        digitalWrite(NAN_ALERT_LED, HIGH);
         Serial.println("NaN error!");
     }
 

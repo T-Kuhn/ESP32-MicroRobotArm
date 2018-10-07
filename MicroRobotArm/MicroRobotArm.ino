@@ -127,6 +127,9 @@ void setup()
     mb = robotArmIK.runIK(5.0, 220.0, M_PI, mb);
     sineStepperController.addMoveBatch(mb);
 
+    mb = robotArmIK.runIK(-5.0, 220.0, M_PI, mb);
+    sineStepperController.addMoveBatch(mb);
+
     mb.addMove(/*id:*/ 0, /*pos:*/ 0);
     mb.addMove(/*id:*/ 1, /*pos:*/ 0);
     mb.addMove(/*id:*/ 2, /*pos:*/ 0);
