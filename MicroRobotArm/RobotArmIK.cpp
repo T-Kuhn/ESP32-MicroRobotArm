@@ -24,7 +24,7 @@ RobotArmIK::RobotArmIK(double link1, double link2, double link3, double link4)
 // - - - - - - - - - - - - - - -
 // - - - - - RUN IK  - - - - - -
 // - - - - - - - - - - - - - - -
-MoveBatch RobotArmIK::RunIK(double x, double y, double ohm, MoveBatch mb)
+MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
 {
     Point2D _P_A, _P_B, _P_C;
     double _g, _f;
@@ -65,19 +65,18 @@ MoveBatch RobotArmIK::RunIK(double x, double y, double ohm, MoveBatch mb)
     // 7. Calculate angles lambda1, lambda2 and lambda3
     _lambda1 = M_PI_2 - (_phi + _alpha);
     _lambda2 = M_PI - _gamma;
-    _lambda3 = M_PI - ((M_PI_2 - _phi) + _beta) - _ohm; // TODO: This looks fishy. Make sure this is correct.
+    _lambda3 = M_PI - ((M_PI_2 - _phi) + _beta) - _ohm;
 
     mb.addMove(/*id:*/ 0, /*pos:*/ (int32_t)(2048 * _lambda1 / M_PI));
     mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(2048 * _lambda2 / M_PI));
     mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(2048 * _lambda3 / M_PI));
-    /*
+
     Serial.print("lambda1: ");
     Serial.println(_lambda1);
     Serial.print("lambda2: ");
     Serial.println(_lambda2);
     Serial.print("lambda3: ");
     Serial.println(_lambda3);
-    */
 
     return mb;
 }

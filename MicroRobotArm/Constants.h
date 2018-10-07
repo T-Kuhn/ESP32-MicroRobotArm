@@ -8,12 +8,22 @@
 #define Constants_h
 #include "Arduino.h"
 
-#define EXECUTING_ISR_CODE 23
+#define STEPPER1_STEP_PIN 2
+#define STEPPER1_DIR_PIN 4
+#define STEPPER2_STEP_PIN 16
+#define STEPPER2_DIR_PIN 17
+#define STEPPER3_STEP_PIN 5
+#define STEPPER3_DIR_PIN 18
+#define STEPPER4_STEP_PIN 19
+#define STEPPER4_DIR_PIN 21
+
 #define BUTTON_PIN 34
+#define BUTTON_COOLDOWN_CYCLES 10000
+
+#define EXECUTING_ISR_CODE 23
 #define ROTARY_ENC_1_A 32
 #define ROTARY_ENC_1_B 33
-#define ROTARY_ENC_2_A 25
-#define ROTARY_ENC_2_B 26
+
 // NOTE: SineStepper and MoveBatch ids must be lower then MAX_NUM_OF_STEPPERS
 #define MAX_NUM_OF_STEPPERS 10
 #define MAX_NUM_OF_BATCHED_MOVES 100

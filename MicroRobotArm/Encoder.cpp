@@ -17,7 +17,7 @@ Encoder::Encoder(int pinSignalA, int pinSignalB)
     _pinSignalB = pinSignalB;
     pinMode(_pinSignalA, INPUT);
     pinMode(_pinSignalB, INPUT);
-    Count = 0;
+    count = 0;
     _state = 0;
 }
 
@@ -45,7 +45,7 @@ void Encoder::update()
         if (a)
         {
             _state = 2;
-            CurrentRot = 0;
+            currentRot = 0;
         }
         else
         {
@@ -57,7 +57,7 @@ void Encoder::update()
         if (b)
         {
             _state = 4;
-            CurrentRot = 1;
+            currentRot = 1;
         }
         else
         {
@@ -104,7 +104,7 @@ void Encoder::update()
         }
         else if (!a && !b)
         {
-            Count--;
+            count--;
             _state = 0;
         }
     }
@@ -116,7 +116,7 @@ void Encoder::update()
         }
         else if (!a && !b)
         {
-            Count++;
+            count++;
             _state = 0;
         }
     }

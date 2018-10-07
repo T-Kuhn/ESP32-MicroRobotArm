@@ -17,8 +17,8 @@ class Encoder
   public:
     Encoder(int pinSignalA, int pinSignalB);
     void update();
-    int Count;
-    int CurrentRot;
+    int count;
+    int currentRot;
     // currentRot:
     // 0 -> rotating CCW
     // 1 -> rotating CW
