@@ -18,7 +18,8 @@ enum Mode
     adjustingJoint2,
     adjustingJoint3,
     adjustingJoint4,
-    doingControlledMovements
+    doingControlledMovements,
+    error
 };
 
 Mode currentMode = adjustingJoint1;
@@ -96,34 +97,8 @@ void IRAM_ATTR onTimer()
     digitalWrite(EXECUTING_ISR_CODE, LOW);
 }
 
-void setup()
+void drillingUpElbowUpAndDown(MoveBatch mb)
 {
-    Serial.begin(115200);
-
-    pinMode(EXECUTING_ISR_CODE, OUTPUT);
-    pinMode(BUTTON_PIN, INPUT);
-
-    timerSemaphore = xSemaphoreCreateBinary();
-    sineStepperController.attach(&sineStepper1);
-    sineStepperController.attach(&sineStepper2);
-    sineStepperController.attach(&sineStepper3);
-    sineStepperController.attach(&sineStepper4);
-
-    // initialize MoveBatches
-    MoveBatch mb;
-    //mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-    //mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-    //mb.addMove(/*id:*/ 2, /*pos:*/ 0);
-    //mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    //mb.moveDuration = 1;
-    //sineStepperController.addMoveBatch(mb);
-
-    mb.moveDuration = 1.7;
-
-    //mb = robotArmIK.runIK(84.0, 20.0, 0.0, mb);
-    //mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
-    //sineStepperController.addMoveBatch(mb);
-
     mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb);
     mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
@@ -147,36 +122,44 @@ void setup()
     mb = robotArmIK.runIK(50.0, 190.0, M_PI, mb, false);
     mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
+}
 
-    mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 2, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-    sineStepperController.addMoveBatch(mb);
-
-    mb = robotArmIK.runIK(134.0, 50.0, M_PI_2, mb);
+void lookingUpAndDown(MoveBatch mb)
+{
+    mb = robotArmIK.runIK(134.0, 60.0, M_PI_2 + 0.4, mb);
     sineStepperController.addMoveBatch(mb);
 
-    mb = robotArmIK.runIK(134.0, 80.0, M_PI_2, mb);
+    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2, mb);
     sineStepperController.addMoveBatch(mb);
 
-    mb = robotArmIK.runIK(134.0, 50.0, M_PI_2, mb);
+    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2 - 0.4, mb);
     sineStepperController.addMoveBatch(mb);
 
-    mb = robotArmIK.runIK(134.0, 50.0, M_PI_2 + 0.3, mb);
+    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2 + 0.4, mb);
     sineStepperController.addMoveBatch(mb);
+}
 
-    mb = robotArmIK.runIK(134.0, 50.0, M_PI_2 - 0.3, mb);
-    sineStepperController.addMoveBatch(mb);
+void setup()
+{
+    Serial.begin(115200);
 
-    mb = robotArmIK.runIK(134.0, 94.0, M_PI_2 + 0.3, mb);
-    sineStepperController.addMoveBatch(mb);
+    pinMode(EXECUTING_ISR_CODE, OUTPUT);
+    pinMode(BUTTON_PIN, INPUT);
 
-    mb = robotArmIK.runIK(134.0, 94.0, M_PI_2 - 0.3, mb);
-    sineStepperController.addMoveBatch(mb);
+    timerSemaphore = xSemaphoreCreateBinary();
+    sineStepperController.attach(&sineStepper1);
+    sineStepperController.attach(&sineStepper2);
+    sineStepperController.attach(&sineStepper3);
+    sineStepperController.attach(&sineStepper4);
 
-    mb = robotArmIK.runIK(134.0, 94.0, M_PI_2, mb);
+    // initialize MoveBatches
+    MoveBatch mb;
+    mb.moveDuration = 1.7;
+
+    //drillingUpElbowUpAndDown(mb);
+    //lookingUpAndDown(mb);
+
+    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb);
     mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
 
@@ -188,12 +171,36 @@ void setup()
     mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
 
+    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(144.0, 94.0, M_PI_2, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 1024);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(124.0, 94.0, M_PI_2, mb, false);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+
     mb.addMove(/*id:*/ 0, /*pos:*/ 0);
     mb.addMove(/*id:*/ 1, /*pos:*/ 0);
     mb.addMove(/*id:*/ 2, /*pos:*/ 0);
     mb.addMove(/*id:*/ 3, /*pos:*/ 0);
     sineStepperController.addMoveBatch(mb);
     sineStepperController.addMoveBatch(mb);
+
+    mb.addMove(/*id:*/ 0, /*pos:*/ 0);
+    mb.addMove(/*id:*/ 1, /*pos:*/ 0);
+    mb.addMove(/*id:*/ 2, /*pos:*/ 0);
+    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    sineStepperController.addMoveBatch(mb);
+    sineStepperController.addMoveBatch(mb);
+
+    if (robotArmIK.nanErrorOccured)
+    {
+        currentMode = error;
+    }
 
     // Set 80 divider for prescaler
     timer = timerBegin(0, 80, true);
