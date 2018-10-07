@@ -71,12 +71,18 @@ MoveBatch RobotArmIK::runIK(double x, double y, double ohm, MoveBatch mb)
     mb.addMove(/*id:*/ 1, /*pos:*/ (int32_t)(2048 * _lambda2 / M_PI));
     mb.addMove(/*id:*/ 2, /*pos:*/ (int32_t)(2048 * _lambda3 / M_PI));
 
+    /*
     Serial.print("lambda1: ");
     Serial.println(_lambda1);
     Serial.print("lambda2: ");
     Serial.println(_lambda2);
     Serial.print("lambda3: ");
     Serial.println(_lambda3);
+    */
+    if (_lambda1 != _lambda1 || _lambda2 != _lambda2 || _lambda3 != _lambda3)
+    {
+        Serial.println("NaN error!");
+    }
 
     return mb;
 }
