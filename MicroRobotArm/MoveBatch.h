@@ -11,18 +11,18 @@
 
 struct MoveCommand
 {
-  bool isActive;
-  int32_t position;
+    bool isActive;
+    int32_t position;
 };
 
 class MoveBatch
 {
-public:
-  MoveBatch();
-  void addMove(uint8_t id, int32_t pos);
-  MoveCommand batch[MAX_NUM_OF_STEPPERS];
-  bool isActive;
-  double moveDuration;
+  public:
+    MoveBatch();
+    void addMove(uint8_t id, int32_t pos);
+    MoveCommand batch[MAX_NUM_OF_STEPPERS];
+    bool isActive;
+    double moveDuration;
 };
 
 #endif

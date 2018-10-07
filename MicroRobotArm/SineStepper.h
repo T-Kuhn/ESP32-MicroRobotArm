@@ -11,22 +11,22 @@
 
 class SineStepper
 {
-public:
-  SineStepper(uint8_t pinStep, uint8_t pinDir, uint8_t stepperID);
-  void update(double cosine);
-  void setGoalPos(int32_t goalPos);
-  void setStepsToTakeToZero();
-  int32_t currentPos;
-  int8_t id;
+  public:
+    SineStepper(uint8_t pinStep, uint8_t pinDir, uint8_t stepperID);
+    void update(double cosine);
+    void setGoalPos(int32_t goalPos);
+    void setStepsToTakeToZero();
+    int32_t currentPos;
+    int8_t id;
 
-private:
-  uint8_t pulseFromAmplitude(double stepsToTake, double cosine);
-  int32_t _goalPosition;
-  int32_t _currentStepsToTake;
-  uint8_t _pinStep;
-  uint8_t _pinDir;
-  uint8_t _lastPulse;
-  bool _isMovingCW;
+  private:
+    uint8_t pulseFromAmplitude(double stepsToTake, double cosine);
+    int32_t _goalPosition;
+    int32_t _currentStepsToTake;
+    uint8_t _pinStep;
+    uint8_t _pinDir;
+    uint8_t _lastPulse;
+    bool _isMovingCW;
 };
 
 #endif
