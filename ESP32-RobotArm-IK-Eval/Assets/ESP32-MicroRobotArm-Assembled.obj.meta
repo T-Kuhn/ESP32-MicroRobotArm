@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: 0ad033f5a6a03a545a4f800ae761bf31
+timeCreated: 1540338183
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Link1\Link1_Left
+    100004: Link1\Link1_Right
+    100006: Link1\Spacer_Link1
+    100008: Link1\Stepper_Motor_1\Design_Mesh
+    100010: Link1\Stepper_Motor_2\Design_Mesh
+    100012: Link2\Link2_Left
+    100014: Link2\Link2_Right
+    100016: Link2\Spacer1_Link2
+    100018: Link2\Spacer2_Link2
+    100020: Link2\Spacer3_Link2
+    100022: Link2\Stepper_Motor_3\Design_Mesh
+    100024: Link2\Stepper_Motor_4\Design_Mesh
+    100026: Link3\Link3_Left
+    100028: Link3\Link3_Right
+    100030: Link3\Spacer_Link3
+    100032: Link3\Stepper_Motor_5\Design_Mesh
+    100034: Link3\Stepper_Motor_6\Design_Mesh
+    100036: Link4\Link4_Left
+    100038: Link4\Link4_Right
+    100040: Link4\Spacer_Link4
+    100042: Link4\Stepper_Motor_7\Design_Mesh
+    100044: Link4\Tip
+    400000: //RootNode
+    400002: Link1\Link1_Left
+    400004: Link1\Link1_Right
+    400006: Link1\Spacer_Link1
+    400008: Link1\Stepper_Motor_1\Design_Mesh
+    400010: Link1\Stepper_Motor_2\Design_Mesh
+    400012: Link2\Link2_Left
+    400014: Link2\Link2_Right
+    400016: Link2\Spacer1_Link2
+    400018: Link2\Spacer2_Link2
+    400020: Link2\Spacer3_Link2
+    400022: Link2\Stepper_Motor_3\Design_Mesh
+    400024: Link2\Stepper_Motor_4\Design_Mesh
+    400026: Link3\Link3_Left
+    400028: Link3\Link3_Right
+    400030: Link3\Spacer_Link3
+    400032: Link3\Stepper_Motor_5\Design_Mesh
+    400034: Link3\Stepper_Motor_6\Design_Mesh
+    400036: Link4\Link4_Left
+    400038: Link4\Link4_Right
+    400040: Link4\Spacer_Link4
+    400042: Link4\Stepper_Motor_7\Design_Mesh
+    400044: Link4\Tip
+    2100000: mtl_0
+    2100002: mtl_1
+    2300000: Link1\Link1_Left
+    2300002: Link1\Link1_Right
+    2300004: Link1\Spacer_Link1
+    2300006: Link1\Stepper_Motor_1\Design_Mesh
+    2300008: Link1\Stepper_Motor_2\Design_Mesh
+    2300010: Link2\Link2_Left
+    2300012: Link2\Link2_Right
+    2300014: Link2\Spacer1_Link2
+    2300016: Link2\Spacer2_Link2
+    2300018: Link2\Spacer3_Link2
+    2300020: Link2\Stepper_Motor_3\Design_Mesh
+    2300022: Link2\Stepper_Motor_4\Design_Mesh
+    2300024: Link3\Link3_Left
+    2300026: Link3\Link3_Right
+    2300028: Link3\Spacer_Link3
+    2300030: Link3\Stepper_Motor_5\Design_Mesh
+    2300032: Link3\Stepper_Motor_6\Design_Mesh
+    2300034: Link4\Link4_Left
+    2300036: Link4\Link4_Right
+    2300038: Link4\Spacer_Link4
+    2300040: Link4\Stepper_Motor_7\Design_Mesh
+    2300042: Link4\Tip
+    3300000: Link1\Link1_Left
+    3300002: Link1\Link1_Right
+    3300004: Link1\Spacer_Link1
+    3300006: Link1\Stepper_Motor_1\Design_Mesh
+    3300008: Link1\Stepper_Motor_2\Design_Mesh
+    3300010: Link2\Link2_Left
+    3300012: Link2\Link2_Right
+    3300014: Link2\Spacer1_Link2
+    3300016: Link2\Spacer2_Link2
+    3300018: Link2\Spacer3_Link2
+    3300020: Link2\Stepper_Motor_3\Design_Mesh
+    3300022: Link2\Stepper_Motor_4\Design_Mesh
+    3300024: Link3\Link3_Left
+    3300026: Link3\Link3_Right
+    3300028: Link3\Spacer_Link3
+    3300030: Link3\Stepper_Motor_5\Design_Mesh
+    3300032: Link3\Stepper_Motor_6\Design_Mesh
+    3300034: Link4\Link4_Left
+    3300036: Link4\Link4_Right
+    3300038: Link4\Spacer_Link4
+    3300040: Link4\Stepper_Motor_7\Design_Mesh
+    3300042: Link4\Tip
+    4300000: Link1\Link1_Left
+    4300002: Link1\Link1_Right
+    4300004: Link1\Spacer_Link1
+    4300006: Link1\Stepper_Motor_1\Design_Mesh
+    4300008: Link1\Stepper_Motor_2\Design_Mesh
+    4300010: Link2\Link2_Left
+    4300012: Link2\Link2_Right
+    4300014: Link2\Spacer1_Link2
+    4300016: Link2\Spacer2_Link2
+    4300018: Link2\Spacer3_Link2
+    4300020: Link2\Stepper_Motor_3\Design_Mesh
+    4300022: Link2\Stepper_Motor_4\Design_Mesh
+    4300024: Link3\Link3_Left
+    4300026: Link3\Link3_Right
+    4300028: Link3\Spacer_Link3
+    4300030: Link3\Stepper_Motor_5\Design_Mesh
+    4300032: Link3\Stepper_Motor_6\Design_Mesh
+    4300034: Link4\Link4_Left
+    4300036: Link4\Link4_Right
+    4300038: Link4\Spacer_Link4
+    4300040: Link4\Stepper_Motor_7\Design_Mesh
+    4300042: Link4\Tip
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
