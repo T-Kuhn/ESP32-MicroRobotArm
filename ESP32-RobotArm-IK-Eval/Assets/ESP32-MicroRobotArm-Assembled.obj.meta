@@ -53,6 +53,28 @@ ModelImporter:
     400044: Link4\Tip
     2100000: mtl_0
     2100002: mtl_1
+    2100004: Link1_Link1_LeftMat
+    2100006: Link1_Link1_RightMat
+    2100008: Link1_Spacer_Link1Mat
+    2100010: Link1_Stepper_Motor_1_Design_MeshMat
+    2100012: Link1_Stepper_Motor_2_Design_MeshMat
+    2100014: Link2_Link2_LeftMat
+    2100016: Link2_Link2_RightMat
+    2100018: Link2_Spacer1_Link2Mat
+    2100020: Link2_Spacer2_Link2Mat
+    2100022: Link2_Spacer3_Link2Mat
+    2100024: Link2_Stepper_Motor_3_Design_MeshMat
+    2100026: Link2_Stepper_Motor_4_Design_MeshMat
+    2100028: Link3_Link3_LeftMat
+    2100030: Link3_Link3_RightMat
+    2100032: Link3_Spacer_Link3Mat
+    2100034: Link3_Stepper_Motor_5_Design_MeshMat
+    2100036: Link3_Stepper_Motor_6_Design_MeshMat
+    2100038: Link4_Link4_LeftMat
+    2100040: Link4_Link4_RightMat
+    2100042: Link4_Spacer_Link4Mat
+    2100044: Link4_Stepper_Motor_7_Design_MeshMat
+    2100046: Link4_TipMat
     2300000: Link1\Link1_Left
     2300002: Link1\Link1_Right
     2300004: Link1\Spacer_Link1
@@ -154,8 +176,8 @@ ModelImporter:
     addColliders: 0
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
