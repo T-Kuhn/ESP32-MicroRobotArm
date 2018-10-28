@@ -1576,6 +1576,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c899f40f3e8959429a4b9fcb6c9ae0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _makeTransparentToggle: 0
+  _tweenDuration: 1
+  _linkTargets:
+  - {fileID: 288712620}
+  - {fileID: 837550965}
+  - {fileID: 147047716}
+  _motorTargets:
+  - {fileID: 540353718}
+  - {fileID: 929231729}
+  _transparentMatLinks: {fileID: 2100000, guid: 2b35fe86e1d57b9428cf3cace834c9b5,
+    type: 2}
+  _opaqueMatLinks: {fileID: 2100000, guid: 10d0c3bba0581ce45be05608c58ed352, type: 2}
+  _transparentMatMotors: {fileID: 2100000, guid: b11e2179d386d7d4f85ba6428120dbc2,
+    type: 2}
+  _opaqueMatMotors: {fileID: 2100000, guid: 8dbf8b163555b8d4286dbefe7a5e3efe, type: 2}
 --- !u!1 &834648855
 GameObject:
   m_ObjectHideFlags: 0
