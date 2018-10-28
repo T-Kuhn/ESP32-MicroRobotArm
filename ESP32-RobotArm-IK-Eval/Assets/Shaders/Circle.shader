@@ -4,7 +4,7 @@
 //  Sapporo, September, 2018. Released into the public domain.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Shader "Unlit/Circle"
+Shader "RobotArm/Circle"
 {
 	Properties
 	{
