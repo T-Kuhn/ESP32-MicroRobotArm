@@ -124,7 +124,7 @@ namespace RobotArm
 
             if (_lambda1 != _lambda1 || _lambda2 != _lambda2 || _lambda3 != _lambda3)
             {
-                Debug.Log("NaN error!");
+                //Debug.Log("NaN error!");
                 return null;
             }
 

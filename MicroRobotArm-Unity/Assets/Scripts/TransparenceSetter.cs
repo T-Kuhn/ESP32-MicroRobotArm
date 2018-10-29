@@ -79,6 +79,7 @@ namespace RobotArm
             foreach (var rend in renderers)
             {
                 rend.material = new Material(m);
+                rend.material.SetInt("_ZWrite", 1);
             }
         }
     }
