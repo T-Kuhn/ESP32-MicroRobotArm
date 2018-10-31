@@ -12,9 +12,9 @@ using UniRx;
 
 namespace RobotArm
 {
-    public class TransparenceSetter : MonoBehaviour
+    public class TransparenceSetter : MonoBehaviour, IAnim
     {
-        public bool MakeTransparent { set { _makeTransparent.Value = value; } }
+        public bool StartAnim { set { _makeTransparent.Value = value; } }
         ReactiveProperty<bool> _makeTransparent;
         [SerializeField] bool _makeTransparentToggle;
         [SerializeField] float _tweenDuration = 1f;
@@ -31,13 +31,11 @@ namespace RobotArm
         void Start()
         {
             _makeTransparent = new ReactiveProperty<bool>(false);
-            _makeTransparent.Subscribe(x => TweenAllTo(x ? 0f : 1f));
+            _makeTransparent.Subscribe(x => TweenAllTo(x ? 1f : 0f));
         }
 
         void Update()
         {
-            _makeTransparent.Value = _makeTransparentToggle;
-
             UpdateRenderers(_linkTargets);
             UpdateRenderers(_motorTargets);
         }
@@ -54,6 +52,7 @@ namespace RobotArm
 
         void TweenAllTo(float alpha)
         {
+            Debug.Log("tween all to in transparency setter, alpha: " + alpha);
             if (_transparencyTween != null) { _transparencyTween.Kill(); }
 
             if (!_isTransparent)
