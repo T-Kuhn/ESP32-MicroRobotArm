@@ -22,7 +22,7 @@ namespace RobotArm
         {
             if (_start)
             {
-                Observable.Timer(System.TimeSpan.FromMilliseconds(1500), System.TimeSpan.FromMilliseconds(1500))
+                Observable.Timer(System.TimeSpan.FromMilliseconds(800), System.TimeSpan.FromMilliseconds(800))
                 .Zip(animGOs.ToObservable(), (x, y) => y)
                     .Subscribe(x =>
                     {

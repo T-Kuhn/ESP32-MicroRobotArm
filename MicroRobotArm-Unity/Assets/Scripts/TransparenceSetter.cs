@@ -17,6 +17,7 @@ namespace RobotArm
         public bool StartAnim { set { _makeTransparent.Value = value; } }
         ReactiveProperty<bool> _makeTransparent;
         [SerializeField] bool _makeTransparentToggle;
+        [SerializeField] bool _makeVisibleToggle;
         [SerializeField] float _tweenDuration = 1f;
         [SerializeField] Renderer[] _linkTargets;
         [SerializeField] Renderer[] _motorTargets;
@@ -36,6 +37,19 @@ namespace RobotArm
 
         void Update()
         {
+            if (_makeVisibleToggle)
+            {
+                _makeTransparent.Value = true;
+
+                _makeVisibleToggle = false;
+            }
+            if (_makeTransparentToggle)
+            {
+                _makeTransparent.Value = false;
+
+                _makeTransparentToggle = false;
+            }
+
             UpdateRenderers(_linkTargets);
             UpdateRenderers(_motorTargets);
         }
@@ -59,7 +73,12 @@ namespace RobotArm
             {
                 SetAllMaterialsTo(_linkTargets, _transparentMatLinks);
                 SetAllMaterialsTo(_motorTargets, _transparentMatMotors);
-            };
+            }
+            else
+            {
+                SetAllGameObjectsTo(_linkTargets, true);
+                SetAllGameObjectsTo(_motorTargets, true);
+            }
 
             _transparencyTween = DOTween.To(() => _currentAlpha, x => _currentAlpha = x, alpha, _tweenDuration)
                 .OnComplete(() =>
@@ -70,6 +89,11 @@ namespace RobotArm
                         SetAllMaterialsTo(_linkTargets, _opaqueMatLinks);
                         SetAllMaterialsTo(_motorTargets, _opaqueMatMotors);
                     }
+                    else
+                    {
+                        SetAllGameObjectsTo(_linkTargets, false);
+                        SetAllGameObjectsTo(_motorTargets, false);
+                    }
                 });
         }
 
@@ -79,6 +103,14 @@ namespace RobotArm
             {
                 rend.material = new Material(m);
                 rend.material.SetInt("_ZWrite", 1);
+            }
+        }
+
+        void SetAllGameObjectsTo(Renderer[] renderers, bool state)
+        {
+            foreach (var rend in renderers)
+            {
+                rend.gameObject.SetActive(state);
             }
         }
     }
