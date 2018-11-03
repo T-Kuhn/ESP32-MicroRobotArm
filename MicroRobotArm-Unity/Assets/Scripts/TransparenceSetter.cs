@@ -31,7 +31,7 @@ namespace RobotArm
 
         void Start()
         {
-            _makeTransparent = new ReactiveProperty<bool>(false);
+            _makeTransparent = new ReactiveProperty<bool>(true);
             _makeTransparent.Subscribe(x => TweenAllTo(x ? 1f : 0f));
         }
 
@@ -66,7 +66,6 @@ namespace RobotArm
 
         void TweenAllTo(float alpha)
         {
-            Debug.Log("tween all to in transparency setter, alpha: " + alpha);
             if (_transparencyTween != null) { _transparencyTween.Kill(); }
 
             if (!_isTransparent)

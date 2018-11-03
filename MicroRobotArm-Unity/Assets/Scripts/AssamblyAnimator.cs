@@ -20,6 +20,16 @@ namespace RobotArm
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                _start = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                _reset = true;
+            }
+
+
             if (_start)
             {
                 Observable.Timer(System.TimeSpan.FromMilliseconds(800), System.TimeSpan.FromMilliseconds(800))
