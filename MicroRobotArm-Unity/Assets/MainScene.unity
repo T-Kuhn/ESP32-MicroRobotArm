@@ -1732,7 +1732,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 767799270}
   m_LocalRotation: {x: -0, y: 0.008726558, z: -0, w: 0.999962}
-  m_LocalPosition: {x: 1.7, y: 69.3, z: -0.3}
+  m_LocalPosition: {x: 1.7, y: 393.1, z: -0.3}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 1393219829}
@@ -1826,6 +1826,7 @@ GameObject:
   - component: {fileID: 817122878}
   - component: {fileID: 817122877}
   - component: {fileID: 817122879}
+  - component: {fileID: 817122881}
   - component: {fileID: 817122880}
   m_Layer: 0
   m_Name: ESP32-MicroRobotArm-Assembled
@@ -1896,6 +1897,7 @@ MonoBehaviour:
   elbowUp: 1
   _target: {fileID: 767799273}
   _rotationTarget: {fileID: 1393219829}
+  _realTimeTargetFollowing: 0
 --- !u!114 &817122880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1918,6 +1920,17 @@ MonoBehaviour:
   m_CurrentRenderState: 1
   m_VisualMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   m_OcclusionMaterial: {fileID: 15302, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!114 &817122881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 817122876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a932713bec53a42ae40320c0e39919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &834648855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2903,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1335037905}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c0aaa6c9c180ef429fdb9f5e99304c4, type: 3}
   m_Name: 

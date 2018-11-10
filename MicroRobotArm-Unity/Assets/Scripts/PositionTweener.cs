@@ -12,14 +12,6 @@ using UniRx;
 
 namespace RobotArm
 {
-
-    [System.Serializable]
-    public struct GameObjectAndStartPosDelta
-    {
-        public GameObject gameObject;
-        public Vector3 startPosDelta;
-    }
-
     public class PositionTweener : MonoBehaviour, IAnim
     {
         public bool StartAnim { set { _startTween.Value = value; } }
@@ -57,5 +49,12 @@ namespace RobotArm
                 data.gameObject.transform.DOMove(endPos, _tweenDuration);
             }
         }
+    }
+
+    [System.Serializable]
+    public struct GameObjectAndStartPosDelta
+    {
+        public GameObject gameObject;
+        public Vector3 startPosDelta;
     }
 }

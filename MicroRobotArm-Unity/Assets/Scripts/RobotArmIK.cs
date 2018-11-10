@@ -10,14 +10,6 @@ using UnityEngine;
 
 namespace RobotArm
 {
-    public class TargetPositions
-    {
-        public float Link1 { get; set; }
-        public float Link2 { get; set; }
-        public float Link3 { get; set; }
-        public float Link4 { get; set; }
-    }
-
     public class RobotArmIK : MonoBehaviour
     {
         [SerializeField] float _link1;
@@ -32,9 +24,19 @@ namespace RobotArm
         [SerializeField] bool elbowUp;
         [SerializeField] Transform _target;
         [SerializeField] Transform _rotationTarget;
+        [SerializeField] bool _realTimeTargetFollowing;
+
+        private RobotArm _robotArm;
+
+        void Start()
+        {
+            _robotArm = GetComponent<RobotArm>();
+        }
 
         void Update()
         {
+            if (!_realTimeTargetFollowing) { return; }
+
             var targetAngles = RunIK(
                 _target.position.x,
                 _target.position.y,
@@ -43,10 +45,9 @@ namespace RobotArm
 
             if (targetAngles != null)
             {
-                var robotArm = GetComponent<RobotArm>();
-                robotArm.Joint1Rot = new Vector3(0f, 0f, targetAngles.Link1);
-                robotArm.Joint2Rot = new Vector3(0f, 0f, targetAngles.Link2);
-                robotArm.Joint3Rot = new Vector3(0f, 0f, targetAngles.Link3);
+                _robotArm.Joint1Rot = new Vector3(0f, 0f, targetAngles.Link1);
+                _robotArm.Joint2Rot = new Vector3(0f, 0f, targetAngles.Link2);
+                _robotArm.Joint3Rot = new Vector3(0f, 0f, targetAngles.Link3);
                 //jointSetter.Joint4Rot = new Vector3(0f, targetAngles.Link4);
             }
         }
@@ -54,7 +55,7 @@ namespace RobotArm
         // - - - - - - - - - - - - - - -
         // - - - - - RUN IK  - - - - - -
         // - - - - - - - - - - - - - - -
-        TargetPositions RunIK(float x, float y, float ohm, bool elbowUp)
+        public TargetPositions RunIK(float x, float y, float ohm, bool elbowUp)
         {
             Vector2 _P_A, _P_B, _P_C;
             float _g, _f;
@@ -130,5 +131,13 @@ namespace RobotArm
 
             return targets;
         }
+    }
+
+    public class TargetPositions
+    {
+        public float Link1 { get; set; }
+        public float Link2 { get; set; }
+        public float Link3 { get; set; }
+        public float Link4 { get; set; }
     }
 }

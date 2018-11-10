@@ -35,11 +35,11 @@ namespace RobotArm
         [SerializeField] Vector3 _joint3Rot;
         [SerializeField] Vector3 _joint4Rot;
 
-        public Vector3 Joint0Rot { set { _joint0Rot = value; } }
-        public Vector3 Joint1Rot { set { _joint1Rot = value; } }
-        public Vector3 Joint2Rot { set { _joint2Rot = value; } }
-        public Vector3 Joint3Rot { set { _joint3Rot = value; } }
-        public Vector3 Joint4Rot { set { _joint4Rot = value; } }
+        public Vector3 Joint0Rot { get { return _joint0Rot; } set { _joint0Rot = value; } }
+        public Vector3 Joint1Rot { get { return _joint1Rot; } set { _joint1Rot = value; } }
+        public Vector3 Joint2Rot { get { return _joint2Rot; } set { _joint2Rot = value; } }
+        public Vector3 Joint3Rot { get { return _joint3Rot; } set { _joint3Rot = value; } }
+        public Vector3 Joint4Rot { get { return _joint4Rot; } set { _joint4Rot = value; } }
 
         RobotArmIK _robotArmIK;
 
