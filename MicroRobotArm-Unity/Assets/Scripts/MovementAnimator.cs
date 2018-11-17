@@ -22,6 +22,18 @@ namespace RobotArm
 
             _targetPositions = new List<PositionAndEndeffectorAngle>();
 
+            _targetPositions.Add(new PositionAndEndeffectorAngle {
+                Position = new Vector3(0f, 210f, 0f),
+                EndeffectorAngle = Mathf.PI,
+                ElbowUp = true
+            });
+
+            _targetPositions.Add(new PositionAndEndeffectorAngle {
+                Position = new Vector3(0f, 210f, 0f),
+                EndeffectorAngle = Mathf.PI,
+                ElbowUp = false
+            });
+
             /*
             // look up/down
             _targetPositions.Add(new PositionAndEndeffectorAngle {
@@ -50,6 +62,7 @@ namespace RobotArm
             */
 
             // drill left
+            /*
             _targetPositions.Add(new PositionAndEndeffectorAngle {
                 Position = new Vector3(124f, 74f, 0f),
                 EndeffectorAngle = Mathf.PI / 2f,
@@ -67,6 +80,7 @@ namespace RobotArm
                 EndeffectorAngle = Mathf.PI / 2f,
                 ElbowUp = true
             });
+            */
         }
 
         private void SetupSequence()
@@ -77,9 +91,9 @@ namespace RobotArm
                 102f,
                 0f,
                 0f,
-                true
-                );
+                true);
 
+            /*
             sequence.Append(
                 DOTween.To(() => _robotArm.Joint3Rot.z, x =>
                 {
@@ -96,6 +110,7 @@ namespace RobotArm
                     _robotArm.Joint3Rot = currentRot;
                 }, 0f, 1.7f).SetEase(Ease.InOutSine));
 
+            */
             int count = 0;
 
             foreach (var target in _targetPositions)
@@ -131,7 +146,7 @@ namespace RobotArm
                         _robotArm.Joint3Rot = currentRot;
                     }, targetAngles.Link3, 2.5f).SetEase(Ease.InOutSine));
 
-                if (count == 1)
+                if (count == 0)
                 {
                     sequence.Join(
                         DOTween.To(() => _robotArm.Joint4Rot.y, x =>
@@ -142,7 +157,7 @@ namespace RobotArm
                         }, Mathf.PI, 2.5f).SetEase(Ease.InOutSine));
                 }
 
-                if (count == 2)
+                if (count == 1)
                 {
                     sequence.Join(
                         DOTween.To(() => _robotArm.Joint4Rot.y, x =>
@@ -153,7 +168,6 @@ namespace RobotArm
                         }, 0, 2.5f).SetEase(Ease.InOutSine));
                 }
 
-
                 count++;
             }
 
@@ -163,7 +177,7 @@ namespace RobotArm
                     var currentRot = _robotArm.Joint1Rot;
                     currentRot.z = x;
                     _robotArm.Joint1Rot = currentRot;
-                }, 0f, 1.7f).SetEase(Ease.InOutSine));
+                }, 0f, 2.5f).SetEase(Ease.InOutSine));
 
             sequence.Join(
                 DOTween.To(() => _robotArm.Joint2Rot.z, x =>
@@ -171,7 +185,7 @@ namespace RobotArm
                     var currentRot = _robotArm.Joint2Rot;
                     currentRot.z = x;
                     _robotArm.Joint2Rot = currentRot;
-                }, 0f, 1.7f).SetEase(Ease.InOutSine));
+                }, 0f, 2.5f).SetEase(Ease.InOutSine));
 
             sequence.Join(
                 DOTween.To(() => _robotArm.Joint3Rot.z, x =>
@@ -179,7 +193,7 @@ namespace RobotArm
                     var currentRot = _robotArm.Joint3Rot;
                     currentRot.z = x;
                     _robotArm.Joint3Rot = currentRot;
-                }, 0f, 1.7f).SetEase(Ease.InOutSine));
+                }, 0f, 2.5f).SetEase(Ease.InOutSine));
 
             sequence.Rewind();
         }
