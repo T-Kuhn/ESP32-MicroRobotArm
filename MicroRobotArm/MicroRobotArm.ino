@@ -170,6 +170,65 @@ void slidingAlongFloor(MoveBatch mb)
     sineStepperController.addMoveBatch(mb);
 }
 
+void repeatabilityTest(MoveBatch mb)
+{
+    // get into ready position.
+    mb = robotArmIK.runIK(120.0, 90.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    // down -> up -> down.
+    mb = robotArmIK.runIK(140.0, 60.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(140.0, 90.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(140.0, 120.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    // stop for measurement
+    mb = robotArmIK.runIK(140.0, 120.0, M_PI_2, mb);
+    mb.moveDuration = 0.5;
+    sineStepperController.addMoveBatch(mb);
+    mb.moveDuration = 1.75;
+
+    mb = robotArmIK.runIK(140.0, 90.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(140.0, 60.0, M_PI_2, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    // get into second ready position
+    mb = robotArmIK.runIK(85.0, 40.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    // near -> far -> near
+    mb = robotArmIK.runIK(75.0, 20.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(95.0, 20.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(115.0, 20.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(95.0, 20.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    mb = robotArmIK.runIK(75.0, 20.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+
+    // stop for measurement
+    mb = robotArmIK.runIK(75.0, 20.0, 0.0, mb);
+    mb.moveDuration = 0.5;
+    sineStepperController.addMoveBatch(mb);
+    mb.moveDuration = 1.75;
+
+    // get into second ready position
+    mb = robotArmIK.runIK(85.0, 40.0, 0.0, mb);
+    sineStepperController.addMoveBatch(mb);
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -185,20 +244,23 @@ void setup()
 
     // initialize MoveBatches
     MoveBatch mb;
-    mb.moveDuration = 1.7;
+    mb.moveDuration = 1.75;
 
-    drillingUpElbowUpAndDown(mb);
-    lookingUpAndDown(mb);
-    drillingLeft(mb);
-    slidingAlongFloor(mb);
+    repeatabilityTest(mb);
+    //drillingUpElbowUpAndDown(mb);
+    //lookingUpAndDown(mb);
+    //drillingLeft(mb);
+    //slidingAlongFloor(mb);
 
-    mb.moveDuration = 1.7;
-    mb.addMove(/*id:*/ 0, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 1, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 2, /*pos:*/ 0);
-    mb.addMove(/*id:*/ 3, /*pos:*/ 0);
-    sineStepperController.addMoveBatch(mb);
-    sineStepperController.addMoveBatch(mb);
+    // go back to gome position START
+    //mb.moveDuration = 1.7;
+    //mb.addMove(/*id:*/ 0, /*pos:*/ 0);
+    //mb.addMove(/*id:*/ 1, /*pos:*/ 0);
+    //mb.addMove(/*id:*/ 2, /*pos:*/ 0);
+    //mb.addMove(/*id:*/ 3, /*pos:*/ 0);
+    //sineStepperController.addMoveBatch(mb);
+    //sineStepperController.addMoveBatch(mb);
+    // go back to gome position END
 
     if (robotArmIK.nanErrorOccured)
     {
